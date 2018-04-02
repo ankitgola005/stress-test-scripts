@@ -4,8 +4,19 @@ echo $NPROC
 
 re='^[0-9]+$'
 if ! [[ $NPROC =~ $re ]] ; then
-    NPROC=8
+    NPROC=4
 fi
+
+if [ $# -eq 0 ]
+then
+    mul=4
+fi
+
+if ! [[ $1 =~ $re ]] ; then
+    mul=4
+fi
+
+mul=$1
 
 prime(){
     num=2
@@ -33,7 +44,7 @@ prime(){
     done
 }
 
-NPROC=`expr $NPROC \* 2`
+NPROC=`expr $NPROC \* $mul`
 while [ "$NPROC" != 0 ]
 do
     prime &

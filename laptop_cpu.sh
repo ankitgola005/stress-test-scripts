@@ -2,6 +2,11 @@
 NPROC=$(nproc --all)
 echo $NPROC
 
+re='^[0-9]+$'
+if ! [[ $NPROC =~ $re ]] ; then
+    NPROC=8
+fi
+
 prime(){
     num=2
     while true

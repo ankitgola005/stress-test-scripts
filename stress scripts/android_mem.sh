@@ -2,19 +2,23 @@
 su swapoff -a
 i=0
 #size=`expr $1 \* 1073741824`
-size=1073741824
-echo $size
+mode=$1
+size=$2
+count=$3
+#echo $size
 
-while true
+while [ $i -le $count ]
 do
-    echo $i
-    sync
-    su
-    dd if=/dev/urandom of=/data/local/tmp/ramTest/tempfile bs=1024 count=$size
-    sync
-    su rm -r /data/dalvic-cache
-    su rm -r /cache/dalvic-cache
-    su rm -r /data/local/tmp/ramTest/tempfile
+    #echo $i
+    #sync
+    if [ $mode -eq 1 ]
+    then
+        dd if=/dev/urandom of=/data/local/tmp/ramTest/tempfile bs=256 count=$size
+    fi
+    #sync
     i=$((i+1))
+    #su rm -r /data/dalvic-cache
+    #su rm -r /cache/dalvic-cache
+    #su rm -r /data/local/tmp/ramTest/tempfile
 done
 

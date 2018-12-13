@@ -2,10 +2,16 @@
 swapoff -a
 i=0
 mem=$(cat /proc/meminfo | grep MemTotal)
+memActive=$1
+count=$3
 echo $mem
-while true
+
+while [ $i -le $count ]
 do
-    dd if=/dev/zero of=/dev/shm/fill bs=1k count=8182k
-    echo $i
+    if [$memActive eq 1]
+    then
+        dd if=/dev/zero of=/dev/shm/fill bs=1k count=1024k
+    fi
+    #echo $i
     i=$((i+1))
 done

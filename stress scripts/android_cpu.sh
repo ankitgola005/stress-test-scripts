@@ -1,23 +1,10 @@
 #!/bin/sh
-NPROC=$(nproc --all)
+NPROC=$(nproc --all)    # Query number of cores
 echo $NPROC
 
-#re='^[0-9]+$'
-#if ! [[ $NPROC =~ $re ]] ; then
-#    NPROC=4
-#fi
-#
-#if [ $# -eq 0 ]
-#then
-#    mul=4
-#fi
-#
-#if ! [[ $1 =~ $re ]] ; then
-#    mul=4
-#fi
+mul=$1      # Thread multiplier. Spawn this number of threads per core
 
-mul=$1
-
+# Check whether a number is prime
 prime(){
     num=2
     while true
@@ -44,6 +31,7 @@ prime(){
     done
 }
 
+# spawn threads
 NPROC=`expr $NPROC \* $mul`
 while [ "$NPROC" != 0 ]
 do

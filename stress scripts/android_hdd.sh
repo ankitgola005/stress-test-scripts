@@ -1,24 +1,22 @@
 #!bin/bash
 su swapoff -a
 i=0
-#size=`expr $1 \* 1073741824`
-mode=$1
-size=$2
-count=$3
+mode=$1     # Stress enable = 1, stress disabled = 0
+size=$2     # data size to write
+count=$3    # Number of times to repeat the stressing
 echo $size
 
 while [ $i -le $count ]
 do
-
-    #echo $i
-    if [ $mode -eq 1 ]
+    if [ $mode -eq 1 ]  # If stressing enabled
     then
         sync
-        dd if=/dev/urandom of=/sdcard/tempfile bs=1024 count=$size
+        dd if=/dev/urandom of=/sdcard/tempfile bs=1024 count=$size  # copy data to hdd
         sync
     fi
+    
     su rm -r /data/dalvik-cache
     su rm -r /cache/dalvik-cache
-    su rm -r /sdcard/tempfile
+    su rm -r /sdcard/tempfile   # Delete written data
     i=$((i+1))
 done

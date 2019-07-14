@@ -1,24 +1,15 @@
 #!bin/bash
 su swapoff -a
 i=0
-#size=`expr $1 \* 1073741824`
-mode=$1
-size=$2
-count=$3
-#echo $size
+mode=$1     # Stress enabled = 1,
+size=$2     # Data size to be written every for every stress test
+count=$3    #Number of times to run the test
 
 while [ $i -le $count ]
 do
-    #echo $i
-    #sync
     if [ $mode -eq 1 ]
     then
-        dd if=/dev/urandom of=/data/local/tmp/ramTest/tempfile bs=256 count=$size
+        dd if=/dev/urandom of=/data/local/tmp/ramTest/tempfile bs=256 count=$size   # Write data
     fi
-    #sync
     i=$((i+1))
-    #su rm -r /data/dalvic-cache
-    #su rm -r /cache/dalvic-cache
-    #su rm -r /data/local/tmp/ramTest/tempfile
 done
-
